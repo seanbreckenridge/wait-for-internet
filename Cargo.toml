@@ -13,4 +13,4 @@ repository = "https://github.com/seanbreckenridge/wait-for-internet"
 
 [dependencies]
 structopt = "0.3.3"
-reqwest = "0.9.22"
+online = { git = "https://github.com/jesusprubio/online", branch = "master" }

@@ -3,7 +3,7 @@ use std::thread::sleep;
 use std::process::exit;
 
 use structopt::StructOpt;
-use reqwest;
+use online::*;
 
 #[derive(StructOpt, Debug)]
 /// Command line utility that waits till you have an internet connection.
@@ -17,17 +17,17 @@ struct CLI {
     /// URL to check internet connection against
     url: String,
 
-    #[structopt(short = "w", long = "--wait-time", default_value = "1")]
+    #[structopt(short = "w", long = "--wait-time", default_value = "0")]
     /// Time to wait between failed requests
     wait: u64,
 }
 
 
 fn main() {
+
     let opt = CLI::from_args();
-    //println!("{:?}", opt);
-    
     let start_time = SystemTime::now();
+    let wait_time = Duration::from_secs(opt.wait);
 
     loop {
 
@@ -42,18 +42,21 @@ fn main() {
             None => (), // if no timeout was passed, wait infinitely
         }
 
-        // blocking get
-        let resp = reqwest::get(&opt.url);
-        match resp {
-            Ok(r) => {
-                println!("Succeeded with status code '{}'", r.status());
-                exit(0);
-            },
-            Err(_) => (), // ignore errors
+        // exit if we're online
+        match online(None) { // default 3 second timeout
+            Ok(res) => {
+                if res { // if response was successful
+                    exit(0);
+                }
+            }
+            Err(e) => {
+                eprintln!("Warning: {}", e);
+            }, // ping failed, try again
         }
 
-        // Sleep
-        sleep(Duration::from_secs(opt.wait));
-        // println!("{:?}", start_time.elapsed().unwrap());
+        // sleep between checks
+        if opt.wait > 0 {
+            sleep(wait_time);
+        }
     }
 }
