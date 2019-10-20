@@ -1,7 +1,7 @@
 # wait-for-internet
 
 ```
-wait-for-internet 0.1.0
+wait-for-internet 0.1.1
 Command line utility that waits till you have an internet connection.
 
 USAGE:
@@ -14,7 +14,7 @@ FLAGS:
 OPTIONS:
     -t, --timeout <timeout>    Exits if a successful connection is not made within timeout seconds.
     -u, --url <url>            URL to check internet connection against [default: https://www.google.com/]
-    -w, --wait-time <wait>     Time to wait between failed requests [default: 1]
+    -w, --wait-time <wait>     Time to wait between failed requests [default: 0]
 ```
 
 ### Install
