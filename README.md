@@ -13,7 +13,6 @@ FLAGS:
 
 OPTIONS:
     -t, --timeout <timeout>    Exits if a successful connection is not made within timeout seconds.
-    -u, --url <url>            URL to check internet connection against [default: https://www.google.com/]
     -w, --wait-time <wait>     Time to wait between failed requests [default: 0]
 ```
 

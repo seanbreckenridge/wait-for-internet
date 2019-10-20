@@ -15,10 +15,6 @@ struct CLI {
     /// is not made within timeout seconds.
     timeout: Option<u64>,
 
-    #[structopt(short = "u", long, default_value = "https://www.google.com/")]
-    /// URL to check internet connection against
-    url: String,
-
     #[structopt(short = "w", long = "--wait-time", default_value = "0")]
     /// Time to wait between failed requests
     wait: u64,
