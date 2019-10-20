@@ -49,6 +49,7 @@ fn main() {
         match online(None) { // default 3 second timeout
             Ok(res) => {
                 if res { // if response was successful
+                    println!(); // print a newline to fix cursor location
                     exit(0);
                 }
             }
