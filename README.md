@@ -29,7 +29,7 @@ git clone https://github.com/seanbreckenridge/wait-for-internet
 cd wait-for-internet
 cargo build --bins --release  # you can add the '-j <CPU_COUNT>' flag to specify CPU count
 # copy to somewhere on your $PATH
-cp ./target/wait-for-internet /usr/local/bin/
+cp ./target/release/wait-for-internet /usr/local/bin/
 wait-for-internet  # test the script
 ```
 
