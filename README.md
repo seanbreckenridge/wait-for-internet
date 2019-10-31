@@ -43,6 +43,6 @@ On Mac, one can do something like:
 
 `wait-for-internet && say "You have internet"`
 
-I have an alias setup on my machine using that plays the default 'message' sound and sends a notification:
+I have an alias setup on my machine that plays the default 'message' sound and sends a notification:
 
 `alias wfi='wait-for-internet && notify-send "INTERNET" && mpv /usr/share/sounds/freedesktop/stereo/message.oga > /dev/null 2>&1'`
