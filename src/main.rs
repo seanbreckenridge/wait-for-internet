@@ -12,12 +12,17 @@ struct CLI {
 
     #[structopt(short = "t", long)]
     /// Exits if a successful connection
-    /// is not made within timeout seconds.
+    /// is not made within <timeout> seconds
     timeout: Option<u64>,
 
     #[structopt(short = "w", long = "--wait-time", default_value = "0")]
     /// Time to wait between failed requests
     wait: u64,
+
+    #[structopt(long, default_value = "")]
+    /// Text to display before dots while waiting
+    text: String
+
 }
 
 
@@ -26,7 +31,7 @@ fn main() {
     let opt = CLI::from_args(); // parse command line args
     let start_time = SystemTime::now(); // remember start time for timeout
     let wait_time = Duration::from_secs(opt.wait); // duration to wait
-    let _sp = Spinner::new(Spinners::SimpleDots, "".into()); // start 'spinner' while waiting
+    let _sp = Spinner::new(Spinners::Dots2, opt.text.into()); // start 'spinner' while waiting
 
     loop {
 
