@@ -50,10 +50,13 @@ I have an alias setup on my machine that plays the default 'message' sound and s
 
 Can also be used in situations to verify you have internet before calling some other command:
 
-`wait-for-internet && sudo apt update && sudo apt upgrade`
+`wait-for-internet && xdotool search --class "Firefox" key --window %@ "ctrl+r"` (refresh firefox after you have internet)
 
-`wait-for-internet && pip3 install <something>`
+`wait-for-internet && sudo apt update && sudo apt upgrade`
 
 `wait-for-internet && speedtest-cli`
 
 `wait-for-internet && ssh <somewhere>`
+
+`wait-for-internet && fg` (resume some suspended task that requires internet)
+
