@@ -16,7 +16,7 @@ FLAGS:
 OPTIONS:
         --text <text>          Text to display before dots while waiting [default: ]
     -t, --timeout <timeout>    Exits if a successful connection is not made within <timeout> seconds
-    -w, --wait-time <wait>     Time to wait between failed requests [default: 0]
+    -w, --wait-time <wait>     Time to wait between failed requests [default: 1]
 ```
 
 Exits successfully once it makes a successful request, see the [online](https://github.com/jesusprubio/online) crate for which URLs/fullbacks it uses to check for a remote connection.
