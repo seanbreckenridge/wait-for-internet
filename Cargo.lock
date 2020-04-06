@@ -141,8 +141,8 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "online"
-version = "0.2.1-alpha.0"
-source = "git+https://github.com/jesusprubio/online#4f550c73470b8760eae8be3fd9a277818a83c8b5"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "simple-error 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -343,7 +343,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 name = "wait-for-internet"
 version = "0.1.2"
 dependencies = [
- "online 0.2.1-alpha.0 (git+https://github.com/jesusprubio/online)",
+ "online 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "spinners 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "structopt 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -392,7 +392,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum heck 0.3.1 (registry+https://github.com/rust-lang/crates.io-index)" = "20564e78d53d2bb135c343b3f47714a56af2061f1c928fdb541dc7b9fdd94205"
 "checksum lazy_static 1.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "e2abad23fbc42b3700f2f279844dc832adb2b2eb069b2df918f455c4e18cc646"
 "checksum libc 0.2.65 (registry+https://github.com/rust-lang/crates.io-index)" = "1a31a0627fdf1f6a39ec0dd577e101440b7db22672c0901fe00a9a6fbb5c24e8"
-"checksum online 0.2.1-alpha.0 (git+https://github.com/jesusprubio/online)" = "<none>"
+"checksum online 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "848cc118fc912a01b072fff732fd8c12c58ed779b3d537cf9ce89e50fab69191"
 "checksum proc-macro-error 0.2.6 (registry+https://github.com/rust-lang/crates.io-index)" = "aeccfe4d5d8ea175d5f0e4a2ad0637e0f4121d63bd99d356fb1f39ab2e7c6097"
 "checksum proc-macro2 1.0.6 (registry+https://github.com/rust-lang/crates.io-index)" = "9c9e470a8dc4aeae2dee2f335e8f533e2d4b347e1434e5671afc49b054592f27"
 "checksum quote 0.3.15 (registry+https://github.com/rust-lang/crates.io-index)" = "7a6e920b65c65f10b2ae65c831a81a073a89edd28c7cce89475bff467ab4167a"
