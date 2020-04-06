@@ -341,7 +341,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
 name = "wait-for-internet"
-version = "0.1.2"
+version = "0.1.3"
 dependencies = [
  "online 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "spinners 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)",
