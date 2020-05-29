@@ -6,8 +6,8 @@ authors = ["Sean Breckenridge <seanbrecke@gmail.com>"]
 license = "MIT"
 description = "Command line utility that waits till you have an internet connection."
 readme = "README.md"
-homepage = "https://github.com/seanbreckenridge/wait-for-internet"
-repository = "https://github.com/seanbreckenridge/wait-for-internet"
+homepage = "https://gitlab.com/seanbreckenridge/wait-for-internet"
+repository = "https://gitlab.com/seanbreckenridge/wait-for-internet"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

@@ -26,7 +26,7 @@ Exits successfully once it makes a successful request, see the [online](https://
 Install [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html).
 
 ```
-git clone https://github.com/seanbreckenridge/wait-for-internet
+git clone https://gitlab.com/seanbreckenridge/wait-for-internet
 cd wait-for-internet
 cargo build --bins --release  # you can add the '-j <CPU_COUNT>' flag to specify CPU count
 # copy to somewhere on your $PATH
