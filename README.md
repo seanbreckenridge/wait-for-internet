@@ -23,15 +23,10 @@ Exits successfully once it makes a successful request, see the [online](https://
 
 ### Install
 
-Install [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html).
+Install [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html), then:
 
 ```
-git clone https://gitlab.com/seanbreckenridge/wait-for-internet
-cd wait-for-internet
-cargo build --bins --release  # you can add the '-j <CPU_COUNT>' flag to specify CPU count
-# copy to somewhere on your $PATH
-cp ./target/release/wait-for-internet /usr/local/bin/
-wait-for-internet  # test the script
+cargo install --git https://gitlab.com/seanbreckenridge/wait-for-internet
 ```
 
 #### Example Usage
