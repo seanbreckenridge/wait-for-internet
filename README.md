@@ -31,6 +31,12 @@ cargo install --git https://gitlab.com/seanbreckenridge/wait-for-internet
 
 #### Example Usage
 
+In bash/shell scripts, I litter `wait-for-internet` wherever I'm paranoid about not having an internet connection. If I have some [script that runs in the background](https://github.com/seanbreckenridge/bgproc) that needs an internet connection (e.g. to `ssh` into my server and run some task), I run `wait-for-internet` and the top, just to be safe.
+
+---
+
+On the command line:
+
 On Mac, one can do something like:
 
 `wait-for-internet && afplay /System/Library/Sounds/Funk.aiff`
