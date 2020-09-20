@@ -18,7 +18,7 @@ struct CLI {
     wait: u64,
 
     #[structopt(long, default_value = "")]
-    /// Text to display before dots while waiting
+    /// Text to display while waiting
     text: String,
 }
 
