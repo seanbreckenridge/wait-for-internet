@@ -3,7 +3,6 @@ use std::thread::sleep;
 use std::time::{Duration, SystemTime};
 
 use online::online;
-use spinners::{Spinner, Spinners};
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
@@ -27,7 +26,9 @@ fn main() {
     let opt = CLI::from_args(); // parse command line args
     let start_time = SystemTime::now(); // remember start time for timeout
     let wait_time = Duration::from_secs(opt.wait); // duration to wait
-    let _sp = Spinner::new(Spinners::Dots2, opt.text); // start 'spinner' while waiting
+    if opt.text.chars().count() > 0 {
+        println!("{}", opt.text);
+    }
 
     loop {
         // Exit if we reach timeout
@@ -43,13 +44,11 @@ fn main() {
             // default 3 second timeout
             Ok(res) => {
                 if res {
-                    // if response was successful
-                    println!(); // print a newline to fix cursor location
                     exit(0);
                 }
             }
             Err(e) => {
-                eprintln!("Warning: {}", e);
+                eprintln!("Warning: {}\n", e);
             } // ping failed, try again
         }
 
