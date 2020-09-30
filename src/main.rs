@@ -48,7 +48,7 @@ fn main() {
                 }
             }
             Err(e) => {
-                eprintln!("Warning: {}\n", e);
+                eprintln!("Warning: {}", e);
             } // ping failed, try again
         }
 
