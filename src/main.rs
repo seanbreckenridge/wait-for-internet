@@ -12,11 +12,9 @@ struct CLI {
     /// Exits if a successful connection
     /// is not made within <timeout> seconds
     timeout: Option<u64>,
-
     #[structopt(short = "w", long = "--wait-time", default_value = "1")]
     /// Time to wait between failed requests
     wait: u64,
-
     #[structopt(long, default_value = "")]
     /// Text to display while waiting
     text: String,

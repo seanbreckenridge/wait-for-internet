@@ -60,4 +60,3 @@ Can also be used in situations to verify you have internet before calling some o
 `wait-for-internet && ssh <somewhere>`
 
 `wait-for-internet && fg` (resume some suspended task that requires internet)
-
