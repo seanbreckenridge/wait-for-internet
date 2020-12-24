@@ -29,14 +29,6 @@ fn main() {
     }
 
     loop {
-        // Exit if we reach timeout
-        if let Some(timeout_length) = opt.timeout {
-            let time_elapsed = start_time.elapsed().unwrap(); // panics on std::time::SystemTimeError
-            if time_elapsed > Duration::from_secs(timeout_length) {
-                panic!("Reached timeout of {} seconds!", timeout_length);
-            }
-        }
-
         // exit if we're online
         match online(None) {
             // default 3 second timeout
@@ -48,6 +40,14 @@ fn main() {
             Err(e) => {
                 eprintln!("Warning: {}", e);
             } // ping failed, try again
+        }
+
+        // Exit if we reach timeout
+        if let Some(timeout_length) = opt.timeout {
+            let time_elapsed = start_time.elapsed().unwrap(); // panics on std::time::SystemTimeError
+            if time_elapsed > Duration::from_secs(timeout_length) {
+                panic!("Reached timeout of {} seconds!", timeout_length);
+            }
         }
 
         // sleep between checks
