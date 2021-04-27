@@ -39,7 +39,9 @@ async fn wait_for_internet(timeout_length: Option<u64>, wait_time: Duration) {
 
         // Exit if we reach timeout
         if let Some(timeout_length) = timeout_length {
-            let time_elapsed = start_time.elapsed().expect("unexpected system time error...");
+            let time_elapsed = start_time
+                .elapsed()
+                .expect("unexpected system time error...");
             if time_elapsed > Duration::from_secs(timeout_length) {
                 eprintln!("Reached timeout of {} seconds!", timeout_length);
                 exit(1);
