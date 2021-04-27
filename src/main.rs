@@ -2,6 +2,7 @@ use std::process::exit;
 use std::thread::sleep;
 use std::time::{Duration, SystemTime};
 
+use async_std::task;
 use online::online;
 use structopt::StructOpt;
 
@@ -20,17 +21,11 @@ struct CLI {
     text: String,
 }
 
-fn main() {
-    let opt = CLI::from_args(); // parse command line args
+async fn wait_for_internet(timeout_length: Option<u64>, wait_time: Duration) {
     let start_time = SystemTime::now(); // remember start time for timeout
-    let wait_time = Duration::from_secs(opt.wait); // duration to wait
-    if opt.text.chars().count() > 0 {
-        println!("{}", opt.text);
-    }
-
     loop {
         // exit if we're online
-        match online(None) {
+        match online(None).await {
             // default 3 second timeout
             Ok(res) => {
                 if res {
@@ -43,17 +38,27 @@ fn main() {
         }
 
         // Exit if we reach timeout
-        if let Some(timeout_length) = opt.timeout {
-            // panics on std::time::SystemTimeError
+        if let Some(timeout_length) = timeout_length {
             let time_elapsed = start_time.elapsed().expect("unexpected system time error...");
             if time_elapsed > Duration::from_secs(timeout_length) {
-                panic!("Reached timeout of {} seconds!", timeout_length);
+                eprintln!("Reached timeout of {} seconds!", timeout_length);
+                exit(1);
             }
         }
 
         // sleep between checks
-        if opt.wait > 0 {
+        if wait_time.as_secs() > 0 {
             sleep(wait_time);
         }
     }
+}
+
+fn main() {
+    let opt = CLI::from_args(); // parse command line args
+    let wait_time = Duration::from_secs(opt.wait); // duration to wait
+    if opt.text.chars().count() > 0 {
+        println!("{}", opt.text);
+    }
+
+    task::block_on(wait_for_internet(opt.timeout, wait_time))
 }
