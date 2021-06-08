@@ -8,11 +8,14 @@ use structopt::StructOpt;
 
 #[derive(StructOpt)]
 /// Command line utility that waits till you have an internet connection.
-struct CLI {
+struct Cli {
     #[structopt(short = "t", long)]
     /// Exits if a successful connection
     /// is not made within <timeout> seconds
     timeout: Option<u64>,
+    #[structopt(short = "q", long)]
+    /// Don't print any warning/log messages
+    quiet: bool,
     #[structopt(short = "w", long = "--wait-time", default_value = "1")]
     /// Time to wait between failed requests
     wait: u64,
@@ -21,7 +24,13 @@ struct CLI {
     text: String,
 }
 
-async fn wait_for_internet(timeout_length: Option<u64>, wait_time: Duration) {
+fn log(message: String, quiet: bool) {
+    if !quiet {
+        eprintln!("{}", message)
+    }
+}
+
+async fn wait_for_internet(timeout_length: Option<u64>, wait_time: Duration, quiet: bool) {
     let start_time = SystemTime::now(); // remember start time for timeout
     loop {
         // exit if we're online
@@ -33,7 +42,7 @@ async fn wait_for_internet(timeout_length: Option<u64>, wait_time: Duration) {
                 }
             }
             Err(e) => {
-                eprintln!("Warning: {}", e);
+                log(format!("Warning: {}", e), quiet);
             } // ping failed, try again
         }
 
@@ -43,7 +52,10 @@ async fn wait_for_internet(timeout_length: Option<u64>, wait_time: Duration) {
                 .elapsed()
                 .expect("unexpected system time error...");
             if time_elapsed > Duration::from_secs(timeout_length) {
-                eprintln!("Reached timeout of {} seconds!", timeout_length);
+                log(
+                    format!("Reached timeout of {} seconds!", timeout_length),
+                    quiet,
+                );
                 exit(1);
             }
         }
@@ -56,11 +68,11 @@ async fn wait_for_internet(timeout_length: Option<u64>, wait_time: Duration) {
 }
 
 fn main() {
-    let opt = CLI::from_args(); // parse command line args
+    let opt = Cli::from_args(); // parse command line args
     let wait_time = Duration::from_secs(opt.wait); // duration to wait
     if opt.text.chars().count() > 0 {
-        println!("{}", opt.text);
+        log(opt.text, opt.quiet)
     }
 
-    task::block_on(wait_for_internet(opt.timeout, wait_time))
+    task::block_on(wait_for_internet(opt.timeout, wait_time, opt.quiet))
 }
