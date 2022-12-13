@@ -2,8 +2,7 @@ use std::process::exit;
 use std::thread::sleep;
 use std::time::{Duration, SystemTime};
 
-use async_std::task;
-use online::online;
+use online::check;
 use structopt::StructOpt;
 
 #[derive(StructOpt)]
@@ -30,16 +29,14 @@ fn log(message: String, quiet: bool) {
     }
 }
 
-async fn wait_for_internet(timeout_length: Option<u64>, wait_time: Duration, quiet: bool) {
+fn wait_for_internet(timeout_length: Option<u64>, wait_time: Duration, quiet: bool) {
     let start_time = SystemTime::now(); // remember start time for timeout
     loop {
         // exit if we're online
-        match online(None).await {
+        match check(None) {
             // default 3 second timeout
-            Ok(res) => {
-                if res {
-                    exit(0);
-                }
+            Ok(_) => {
+                exit(0);
             }
             Err(e) => {
                 log(format!("Warning: {}", e), quiet);
@@ -74,5 +71,5 @@ fn main() {
         log(opt.text, opt.quiet)
     }
 
-    task::block_on(wait_for_internet(opt.timeout, wait_time, opt.quiet))
+    wait_for_internet(opt.timeout, wait_time, opt.quiet);
 }
