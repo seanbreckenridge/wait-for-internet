@@ -27,7 +27,7 @@ Exits successfully once it makes a successful request, see the [online](https://
 Install [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html), then:
 
 ```
-cargo install --git https://github.com/seanbreckenridge/wait-for-internet
+cargo install wait-for-internet
 ```
 
 #### Example Usage
