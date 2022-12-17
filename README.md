@@ -3,7 +3,7 @@
 So that I don't mash Refresh on a web page while I'm waiting for my laptop to have a remote connection.
 
 ```
-wait-for-internet 0.1.6
+wait-for-internet 0.1.8
 Command line utility that waits till you have an internet connection
 
 USAGE:
