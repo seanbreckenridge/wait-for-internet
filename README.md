@@ -22,7 +22,7 @@ OPTIONS:
 
 Exits successfully once it makes a successful request, see the [online](https://github.com/jesusprubio/online) crate for which URLs/fullbacks it uses to check for a remote connection.
 
-### Install
+## Install
 
 Install [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html), then:
 
@@ -30,11 +30,9 @@ Install [cargo](https://doc.rust-lang.org/cargo/getting-started/installation.htm
 cargo install wait-for-internet
 ```
 
-#### Example Usage
+## Example Usage
 
 In bash/shell scripts, I litter `wait-for-internet` wherever I'm paranoid about not having an internet connection. If I have some [script that runs in the background](https://github.com/seanbreckenridge/bgproc) that needs an internet connection (e.g. to `ssh` into my server and run some task), I run `wait-for-internet` and the top, just to be safe.
-
----
 
 On the command line:
 
