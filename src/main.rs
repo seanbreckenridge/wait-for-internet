@@ -83,11 +83,6 @@ impl App {
 
 fn main() -> Result<()> {
     let app = App { cli: Cli::parse() };
-    match app.wait_for_internet() {
-        Ok(exit_code) => exit(exit_code),
-        Err(e) => {
-            eprintln!("Error: {}", e);
-            exit(1);
-        }
-    }
+    let exit_code = app.wait_for_internet()?;
+    exit(exit_code)
 }
