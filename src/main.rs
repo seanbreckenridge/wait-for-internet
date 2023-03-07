@@ -2,74 +2,92 @@ use std::process::exit;
 use std::thread::sleep;
 use std::time::{Duration, SystemTime};
 
+use anyhow::{Context, Result};
+use clap::Parser;
 use online::check;
-use structopt::StructOpt;
 
-#[derive(StructOpt)]
-/// Command line utility that waits till you have an internet connection.
+#[derive(Parser)]
+#[command(
+    author,
+    version,
+    about,
+    long_about = "Command line utility that waits till you have an internet connection."
+)]
 struct Cli {
-    #[structopt(short = "t", long)]
     /// Exits if a successful connection
     /// is not made within <timeout> seconds
+    #[arg(short, long, default_value = None)]
     timeout: Option<u64>,
-    #[structopt(short = "q", long)]
+
     /// Don't print any warning/log messages
+    #[arg(short, long, default_value = "false")]
     quiet: bool,
-    #[structopt(short = "w", long = "--wait-time", default_value = "1")]
+
+    #[arg(short, long, default_value = "1")]
     /// Time to wait between failed requests
-    wait: u64,
-    #[structopt(long, default_value = "")]
+    wait_time: u64,
+
+    #[arg(long, default_value = "")]
     /// Text to display while waiting
     text: String,
 }
 
-fn log(message: String, quiet: bool) {
-    if !quiet {
-        eprintln!("{}", message)
+struct App {
+    cli: Cli,
+}
+
+impl App {
+    fn log(&self, message: String) {
+        if !self.cli.quiet {
+            eprintln!("{}", message)
+        }
+    }
+
+    fn log_text(&self) {
+        if !self.cli.text.is_empty() {
+            self.log(self.cli.text.clone())
+        }
+    }
+
+    fn wait_for_internet(&self) -> Result<i32> {
+        self.log_text();
+        let start_time = SystemTime::now();
+        let wait = Duration::from_secs(self.cli.wait_time);
+
+        loop {
+            // exit if we're online
+            match check(None) {
+                // default 3 second timeout
+                Ok(_) => return Ok(0),
+                Err(e) => self.log(format!("Warning: {}", e)), // ping failed, try again
+            }
+
+            // Exit if we reach timeout
+            if let Some(timeout_length) = self.cli.timeout {
+                let time_elapsed = start_time
+                    .elapsed()
+                    .context("unexpected system time error")?;
+                if time_elapsed > Duration::from_secs(timeout_length) {
+                    self.log(format!("Reached timeout of {} seconds!", timeout_length));
+                    return Ok(1);
+                }
+            }
+
+            // sleep between checks
+            if wait.as_secs() > 0 {
+                sleep(wait);
+            }
+        }
     }
 }
 
-fn wait_for_internet(timeout_length: Option<u64>, wait_time: Duration, quiet: bool) {
-    let start_time = SystemTime::now(); // remember start time for timeout
-    loop {
-        // exit if we're online
-        match check(None) {
-            // default 3 second timeout
-            Ok(_) => {
-                exit(0);
-            }
-            Err(e) => {
-                log(format!("Warning: {}", e), quiet);
-            } // ping failed, try again
-        }
-
-        // Exit if we reach timeout
-        if let Some(timeout_length) = timeout_length {
-            let time_elapsed = start_time
-                .elapsed()
-                .expect("unexpected system time error...");
-            if time_elapsed > Duration::from_secs(timeout_length) {
-                log(
-                    format!("Reached timeout of {} seconds!", timeout_length),
-                    quiet,
-                );
-                exit(1);
-            }
-        }
-
-        // sleep between checks
-        if wait_time.as_secs() > 0 {
-            sleep(wait_time);
+fn main() -> Result<()> {
+    let app = App { cli: Cli::parse() };
+    match app.wait_for_internet() {
+        Ok(exit_code) => exit(exit_code),
+        Err(e) => {
+            eprintln!("Error: {}", e);
+            exit(1);
         }
     }
-}
-
-fn main() {
-    let opt = Cli::from_args(); // parse command line args
-    let wait_time = Duration::from_secs(opt.wait); // duration to wait
-    if opt.text.chars().count() > 0 {
-        log(opt.text, opt.quiet)
-    }
-
-    wait_for_internet(opt.timeout, wait_time, opt.quiet);
 }

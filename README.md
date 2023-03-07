@@ -3,21 +3,17 @@
 So that I don't mash Refresh on a web page while I'm waiting for my laptop to have a remote connection.
 
 ```
-wait-for-internet 0.1.8
-Command line utility that waits till you have an internet connection
+Command line utility that waits till you have an internet connection.
 
-USAGE:
-    wait-for-internet [FLAGS] [OPTIONS]
+Usage: wait-for-internet [OPTIONS]
 
-FLAGS:
-    -h, --help       Prints help information
-    -q, --quiet      Don't print any warning/log messages
-    -V, --version    Prints version information
-
-OPTIONS:
-        --text <text>          Text to display while waiting [default: ]
-    -t, --timeout <timeout>    Exits if a successful connection is not made within <timeout> seconds
-    -w, --wait-time <wait>     Time to wait between failed requests [default: 1]
+Options:
+  -t, --timeout <TIMEOUT>      Exits if a successful connection is not made within <timeout> seconds
+  -q, --quiet                  Don't print any warning/log messages
+  -w, --wait-time <WAIT_TIME>  Time to wait between failed requests [default: 1]
+      --text <TEXT>            Text to display while waiting [default: ]
+  -h, --help                   Print help (see more with '--help')
+  -V, --version                Print version
 ```
 
 Exits successfully once it makes a successful request, see the [online](https://github.com/jesusprubio/online) crate for which URLs/fullbacks it uses to check for a remote connection.
