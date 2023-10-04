@@ -43,16 +43,12 @@ impl App {
         }
     }
 
-    fn log_text(&self) {
+    fn wait_for_internet(&self) -> Result<i32> {
         if !self.cli.text.is_empty() {
             self.log(self.cli.text.clone())
         }
-    }
-
-    fn wait_for_internet(&self) -> Result<i32> {
-        self.log_text();
-        let start_time = SystemTime::now();
         let wait = Duration::from_secs(self.cli.wait_time);
+        let start_time = SystemTime::now();
 
         loop {
             // exit if we're online
